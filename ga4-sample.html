@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GA4 Sample Site</title>
+  <!-- GA4 기본 스니펫 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQLL8301LZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HQLL8301LZ');
+  </script>
+</head>
+<body>
+  <h1>GA4 샘플 사이트</h1>
+  <button onclick="gtag('event','button_click',{label:'test_button'})">
+    이벤트 보내기
+  </button>
+</body>
+</html>
