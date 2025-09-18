@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GA4 샌드박스 (GitHub Pages)</title>
+
+  <!-- 1) GA4 gtag.js: 측정 ID를 YOUR_GA4_ID 자리에서 교체합니다. -->
+  <!-- 사용자가 제공한 GA4 ID: G-HQLL8301LZ -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HQLL8301LZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // DebugView에서 보려면 debug_mode를 true로 둘 수 있습니다.
+    gtag('config', 'G-HQLL8301LZ', { debug_mode: true });
+  </script>
+
+  <!-- (선택) GTM을 같이 쓰고 싶다면 아래 주석을 해제하고, GT-K825FFB8로 교체하세요.
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GT-K825FFB8');
+  </script>
+  -->
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Apple SD Gothic Neo, sans-serif; margin: 32px; line-height: 1.5; }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    h1 { margin-bottom: 8px; }
+    .note { background: #f6f8fa; border: 1px solid #eaecef; padding: 12px 14px; border-radius: 8px; margin: 12px 0 24px; }
+    button { padding: 10px 14px; border-radius: 8px; border: 1px solid #d0d7de; background: white; cursor: pointer; margin: 6px 8px 6px 0; }
+    button:hover { background: #f3f4f6; }
+    .row { margin: 10px 0; }
+    code { background: #f6f8fa; padding: 2px 6px; border-radius: 6px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+    .card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px; }
+    .muted { color: #6b7280; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <!-- (선택) GTM 사용 시 body 바로 아래에 noscript도 추가합니다.
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GT-K825FFB8"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  -->
+
+  <div class="wrap">
+    <h1>GA4 샌드박스</h1>
+    <div class="note">
+      <div><strong>설명</strong></div>
+      <ul>
+        <li>이 페이지는 GA4 연습용 샘플입니다. GA4 측정 ID: <code>G-HQLL8301LZ</code></li>
+        <li>아래 버튼으로 수동 이벤트를 전송하거나, 자동 트래픽(시뮬레이션)을 시작할 수 있습니다.</li>
+        <li>GA 콘솔에서 <strong>실시간</strong> 또는 <strong>DebugView</strong>로 확인하세요.</li>
+      </ul>
+    </div>
+
+    <h2>수동 이벤트 테스트</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="row"><strong>page_view</strong></div>
+        <div class="row"><button onclick="sendEvent('page_view', {page_location: location.href})">Send page_view</button></div>
+        <div class="muted">현재 페이지 URL을 포함하여 페이지뷰 이벤트 전송</div>
+      </div>
+      <div class="card">
+        <div class="row"><strong>view_item</strong></div>
+        <div class="row"><button onclick="sendEvent('view_item', randomItemParams())">Send view_item</button></div>
+        <div class="muted">임의의 item_id, price 포함</div>
+      </div>
+      <div class="card">
+        <div class="row"><strong>add_to_cart</strong></div>
+        <div class="row"><button onclick="sendEvent('add_to_cart', randomItemParams())">Send add_to_cart</button></div>
+        <div class="muted">장바구니 담기</div>
+      </div>
+      <div class="card">
+        <div class="row"><strong>begin_checkout</strong></div>
+        <div class="row"><button onclick="sendEvent('begin_checkout', randomItemParams())">Send begin_checkout</button></div>
+        <div class="muted">체크아웃 시작</div>
+      </div>
+      <div class="card">
+        <div class="row"><strong>purchase</strong></div>
+        <div class="row"><button onclick="sendEvent('purchase', randomPurchaseParams())">Send purchase</button></div>
+        <div class="muted">거래 ID, value, currency 포함</div>
+      </div>
+      <div class="card">
+        <div class="row"><strong>custom event</strong></div>
+        <div class="row"><button onclick="sendEvent('button_click', {label: 'cta_primary'})">Send button_click</button></div>
+        <div class="muted">임의 커스텀 이벤트</div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:28px;">자동 트래픽 시뮬레이터</h2>
+    <div class="row">
+      <button id="startBtn" onclick="startAuto()">Start Auto Traffic</button>
+      <button id="stopBtn" onclick="stopAuto()" disabled>Stop Auto Traffic</button>
+      <span id="status" class="muted" style="margin-left:8px;">stopped</span>
+    </div>
+    <div class="row muted">기본 주기: 5초. 브라우저 탭이 열려 있어야 동작합니다.</div>
+
+    <h3 style="margin-top:22px;">최근 전송 로그</h3>
+    <pre id="log" style="white-space:pre-wrap;background:#0b1021;color:#e0e6ff;padding:12px;border-radius:8px;min-height:120px;"></pre>
+  </div>
+
+  <script>
+    // 유틸: 랜덤 파라미터
+    function randomInt(min, max){ return Math.floor(Math.random() * (max - min + 1)) + min; }
+    function randomId(prefix){ return prefix + '_' + Date.now() + '_' + randomInt(1000,9999); }
+    function randomPrice(){ return +(Math.random() * 100).toFixed(2); }
+
+    function randomItemParams(){
+      const item_id = randomInt(1000, 9999);
+      return {
+        items: [{ item_id: 'SKU' + item_id, item_name: 'Item ' + item_id, price: randomPrice(), quantity: 1 }]
+      };
+    }
+
+    function randomPurchaseParams(){
+      const value = +(Math.random() * 300 + 10).toFixed(2);
+      return {
+        transaction_id: randomId('txn'),
+        value: value,
+        currency: 'USD',
+        items: [{ item_id: 'SKU' + randomInt(1000, 9999), item_name: 'Purchased Item', price: value, quantity: 1 }]
+      };
+    }
+
+    // 공통 이벤트 송신
+    function sendEvent(name, params){
+      try{
+        gtag('event', name, params || {});
+        appendLog('Sent: ' + name + (params ? (' ' + JSON.stringify(params)) : ''));
+      }catch(e){
+        appendLog('Error: ' + e.message);
+      }
+    }
+
+    // 자동 시뮬레이터
+    let timer = null;
+    const pool = [
+      () => sendEvent('page_view', { page_location: location.href }),
+      () => sendEvent('view_item', randomItemParams()),
+      () => sendEvent('add_to_cart', randomItemParams()),
+      () => sendEvent('begin_checkout', randomItemParams()),
+      () => sendEvent('purchase', randomPurchaseParams()),
+      () => sendEvent('button_click', { label: 'auto_random' })
+    ];
+
+    function startAuto(){
+      if(timer) return;
+      timer = setInterval(() => {
+        const fn = pool[Math.floor(Math.random()*pool.length)];
+        fn();
+      }, 5000);
+      document.getElementById('status').textContent = 'running (every 5s)';
+      document.getElementById('startBtn').disabled = true;
+      document.getElementById('stopBtn').disabled = false;
+    }
+
+    function stopAuto(){
+      if(timer){
+        clearInterval(timer);
+        timer = null;
+      }
+      document.getElementById('status').textContent = 'stopped';
+      document.getElementById('startBtn').disabled = false;
+      document.getElementById('stopBtn').disabled = true;
+    }
+
+    function appendLog(text){
+      const el = document.getElementById('log');
+      const ts = new Date().toLocaleTimeString();
+      el.textContent = `[${ts}] ${text}
+` + el.textContent;
+    }
+
+    // 최초 1회 page_view 전송
+    sendEvent('page_view', { page_location: location.href });
+  </script>
+</body>
+</html>
